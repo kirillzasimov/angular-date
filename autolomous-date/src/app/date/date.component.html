@@ -1,0 +1,64 @@
+<div>
+  <input type="text" placeholder="DD / MM / YYYY" class="clr-input" (change)="addEvent($event)" [(ngModel)]="value" disabled="true">
+  <button (click)="expand()" type="button" class="btn btn-link">
+    <clr-icon shape="caret down" size="24"></clr-icon>
+  </button>
+  <div class="clr-row" *ngIf="expandPressed">
+    <div class="clr-col-sm-2">
+      <div class="card" style="position: absolute; z-index: 5; width: 200px; margin-top: -5px">
+        <div class="card-header">
+          <div class="clr-select-wrapper">
+            <select id="select-basic" class="clr-select" value={{selectedDate.month}}
+              (focusout)="monthChangeHandler($event)">
+              <option value="Jan">January</option>
+              <option value="Feb">Feburary</option>
+              <option value="Mar">March</option>
+              <option value="Apr">April</option>
+              <option value="May">May</option>
+              <option value="Jun">June</option>
+              <option value="Jul">July</option>
+              <option value="Aug">August</option>
+              <option value="Sep">September</option>
+              <option value="Oct">October</option>
+              <option value="Nov">November</option>
+              <option value="Dec">December</option>
+            </select>
+          </div>
+          <br>
+          <input type="number" id="basic" value={{selectedDate.year}} class="clr-input" style="width: 60%"
+            (focusout)="yearChangeHandler($event)">
+        </div>
+        <div class="card-block">
+          <div class="clr-row">
+            <div class="clr-col-sm-1" *ngFor="let i of [1,2,3,4,5,6,7]">
+              <button (click)="setDay(i)" type="button" class="btn btn-link">{{i}}</button>
+            </div>
+            <div class="clr-col-sm-1" *ngFor="let i of [8,9,10,11,12,13,14]">
+              <button (click)="setDay(i)" type="button" class="btn btn-link">{{i}}</button>
+            </div>
+            <div class="clr-col-sm-1" *ngFor="let i of [15,16,17,18,19,20,21]">
+              <button (click)="setDay(i)" type="button" class="btn btn-link">{{i}}</button>
+            </div>
+            <div class="clr-col-sm-1" *ngFor="let i of [22,23,24,25,26,27,28]">
+              <button (click)="setDay(i)" type="button" class="btn btn-link">{{i}}</button>
+            </div>
+            <div class="clr-col-sm-1"
+              *ngIf="selectedDate.month === 'Feb' && !(selectedDate.year%4 != 0 || (selectedDate.year%100 == 0 && selectedDate.year%400 != 0))">
+              <button (click)="setDay(29)" type="button" class="btn btn-link">29</button>
+            </div>
+            <ng-container *ngIf="monthsWith31.includes(selectedDate.month)">
+              <div class="clr-col-sm-1" *ngFor="let i of [29,30,31]">
+                <button (click)="setDay(i)" type="button" class="btn btn-link">{{i}}</button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!monthsWith31.includes(selectedDate.month) && selectedDate.month != 'Feb'">
+              <div class="clr-col-sm-1" *ngFor="let i of [29,30]">
+                <button (click)="setDay(i)" type="button" class="btn btn-link">{{i}}</button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

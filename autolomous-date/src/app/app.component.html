@@ -1,0 +1,39 @@
+<div class="clr-row clr-justify-content-center">
+  <div class="clr-col-3 clr-justify-content-center">
+    <form [formGroup]="dateForm">
+        <div class="alert alert-danger" role="alert" *ngIf="date.invalid">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                    </div>
+                    <span class="alert-text">
+                        Please enter the date in the correct format
+                    </span>
+                </div>
+            </div>
+        </div>
+      <app-date formControlName="date"></app-date>
+    </form>
+    <button class="btn btn-primary" type="submit" (click)="submit()" [disabled]="date.invalid">Submit</button>
+    <br>
+    <span class="spinner spinner-lg" *ngIf="loading"></span>
+  </div>
+</div>
+<div class="modal" *ngIf="loaded">
+  <div class="modal-dialog modal-sm" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-heade">
+        <h3 *ngIf="errorOccured">Something went wrong</h3>
+        <h3 *ngIf="!errorOccired">Success</h3>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="errorOccured">Something went wrong when trying to submit the data</p>
+        <p *ngIf="!errorOccured">You have successfully submitted the data</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" (click)="modalOkClicked()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
